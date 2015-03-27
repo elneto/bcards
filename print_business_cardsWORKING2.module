@@ -1,0 +1,580 @@
+<?php
+/**
+ * @file
+ * devit_mailing_label Module
+ *
+ */
+require_once("lib/label/pdf_label_lib.php");
+
+global $code_country, $selected_language;
+
+  $code_country = array(
+    "AF"=>"Afghanistan",
+    "AX"=>"Aland Islands",
+    "AL"=>"Albania",
+    "DZ"=>"Algeria",
+    "AS"=>"American Samoa",
+    "AD"=>"Andorra",
+    "AO"=>"Angola",
+    "AI"=>"Anguilla",
+    "AQ"=>"Antarctica",
+    "AG"=>"Antigua and Barbuda",
+    "AR"=>"Argentina",
+    "AM"=>"Armenia",
+    "AW"=>"Aruba",
+    "AU"=>"Australia",
+    "AT"=>"Austria",
+    "AZ"=>"Azerbaijan",
+    "BS"=>"Bahamas",
+    "BH"=>"Bahrain",
+    "BD"=>"Bangladesh",
+    "BB"=>"Barbados",
+    "BY"=>"Belarus",
+    "BE"=>"Belgium",
+    "BZ"=>"Belize",
+    "BJ"=>"Benin",
+    "BM"=>"Bermuda",
+    "BT"=>"Bhutan",
+    "BO"=>"Bolivia",
+    "BA"=>"Bosnia and Herzegovina",
+    "BW"=>"Botswana",
+    "BV"=>"Bouvet Island",
+    "BR"=>"Brazil",
+    "IO"=>"British Indian Ocean Territory",
+    "VG"=>"British Virgin Islands",
+    "BN"=>"Brunei",
+    "BG"=>"Bulgaria",
+    "BF"=>"Burkina Faso",
+    "BI"=>"Burundi",
+    "KH"=>"Cambodia",
+    "CM"=>"Cameroon",
+    "CA"=>"Canada",
+    "CV"=>"Cape Verde",
+    "BQ"=>"Caribbean Netherlands",
+    "KY"=>"Cayman Islands",
+    "CF"=>"Central African Republic",
+    "TD"=>"Chad",
+    "CL"=>"Chile",
+    "CN"=>"China",
+    "CX"=>"Christmas Island",
+    "CC"=>"Cocos (Keeling) Islands",
+    "CO"=>"Colombia",
+    "KM"=>"Comoros",
+    "CG"=>"Congo (Brazzaville)",
+    "CD"=>"Congo (Kinshasa)",
+    "CK"=>"Cook Islands",
+    "CR"=>"Costa Rica",
+    "HR"=>"Croatia",
+    "CU"=>"Cuba",
+    "CW"=>"Curaçao",
+    "CY"=>"Cyprus",
+    "CZ"=>"Czech Republic",
+    "DK"=>"Denmark",
+    "DJ"=>"Djibouti",
+    "DM"=>"Dominica",
+    "DO"=>"Dominican Republic",
+    "EC"=>"Ecuador",
+    "EG"=>"Egypt",
+    "SV"=>"El Salvador",
+    "GQ"=>"Equatorial Guinea",
+    "ER"=>"Eritrea",
+    "EE"=>"Estonia",
+    "ET"=>"Ethiopia",
+    "FK"=>"Falkland Islands",
+    "FO"=>"Faroe Islands",
+    "FJ"=>"Fiji",
+    "FI"=>"Finland",
+    "FR"=>"France",
+    "GF"=>"French Guiana",
+    "PF"=>"French Polynesia",
+    "TF"=>"French Southern Territories",
+    "GA"=>"Gabon",
+    "GM"=>"Gambia",
+    "GE"=>"Georgia",
+    "DE"=>"Germany",
+    "GH"=>"Ghana",
+    "GI"=>"Gibraltar",
+    "GR"=>"Greece",
+    "GL"=>"Greenland",
+    "GD"=>"Grenada",
+    "GP"=>"Guadeloupe",
+    "GU"=>"Guam",
+    "GT"=>"Guatemala",
+    "GG"=>"Guernsey",
+    "GN"=>"Guinea",
+    "GW"=>"Guinea-Bissau",
+    "GY"=>"Guyana",
+    "HT"=>"Haiti",
+    "HM"=>"Heard Island and McDonald Islands",
+    "HN"=>"Honduras",
+    "HK"=>"Hong Kong S.A.R., China",
+    "HU"=>"Hungary",
+    "IS"=>"Iceland",
+    "IN"=>"India",
+    "ID"=>"Indonesia",
+    "IR"=>"Iran",
+    "IQ"=>"Iraq",
+    "IE"=>"Ireland",
+    "IM"=>"Isle of Man",
+    "IL"=>"Israel",
+    "IT"=>"Italy",
+    "CI"=>"Ivory Coast",
+    "JM"=>"Jamaica",
+    "JP"=>"Japan",
+    "JE"=>"Jersey",
+    "JO"=>"Jordan",
+    "KZ"=>"Kazakhstan",
+    "KE"=>"Kenya",
+    "KI"=>"Kiribati",
+    "KW"=>"Kuwait",
+    "KG"=>"Kyrgyzstan",
+    "LA"=>"Laos",
+    "LV"=>"Latvia",
+    "LB"=>"Lebanon",
+    "LS"=>"Lesotho",
+    "LR"=>"Liberia",
+    "LY"=>"Libya",
+    "LI"=>"Liechtenstein",
+    "LT"=>"Lithuania",
+    "LU"=>"Luxembourg",
+    "MO"=>"Macao S.A.R., China",
+    "MK"=>"Macedonia",
+    "MG"=>"Madagascar",
+    "MW"=>"Malawi",
+    "MY"=>"Malaysia",
+    "MV"=>"Maldives",
+    "ML"=>"Mali",
+    "MT"=>"Malta",
+    "MH"=>"Marshall Islands",
+    "MQ"=>"Martinique",
+    "MR"=>"Mauritania",
+    "MU"=>"Mauritius",
+    "YT"=>"Mayotte",
+    "MX"=>"Mexico",
+    "FM"=>"Micronesia",
+    "MD"=>"Moldova",
+    "MC"=>"Monaco",
+    "MN"=>"Mongolia",
+    "ME"=>"Montenegro",
+    "MS"=>"Montserrat",
+    "MA"=>"Morocco",
+    "MZ"=>"Mozambique",
+    "MM"=>"Myanmar",
+    "NA"=>"Namibia",
+    "NR"=>"Nauru",
+    "NP"=>"Nepal",
+    "NL"=>"Netherlands",
+    "AN"=>"Netherlands Antilles",
+    "NC"=>"New Caledonia",
+    "NZ"=>"New Zealand",
+    "NI"=>"Nicaragua",
+    "NE"=>"Niger",
+    "NG"=>"Nigeria",
+    "NU"=>"Niue",
+    "NF"=>"Norfolk Island",
+    "MP"=>"Northern Mariana Islands",
+    "KP"=>"North Korea",
+    "NO"=>"Norway",
+    "OM"=>"Oman",
+    "PK"=>"Pakistan",
+    "PW"=>"Palau",
+    "PS"=>"Palestinian Territory",
+    "PA"=>"Panama",
+    "PG"=>"Papua New Guinea",
+    "PY"=>"Paraguay",
+    "PE"=>"Peru",
+    "PH"=>"Philippines",
+    "PN"=>"Pitcairn",
+    "PL"=>"Poland",
+    "PT"=>"Portugal",
+    "PR"=>"Puerto Rico",
+    "QA"=>"Qatar",
+    "RE"=>"Reunion",
+    "RO"=>"Romania",
+    "RU"=>"Russia",
+    "RW"=>"Rwanda",
+    "BL"=>"Saint Barthélemy",
+    "SH"=>"Saint Helena",
+    "KN"=>"Saint Kitts and Nevis",
+    "LC"=>"Saint Lucia",
+    "MF"=>"Saint Martin (French part)",
+    "PM"=>"Saint Pierre and Miquelon",
+    "VC"=>"Saint Vincent and the Grenadines",
+    "WS"=>"Samoa",
+    "SM"=>"San Marino",
+    "ST"=>"Sao Tome and Principe",
+    "SA"=>"Saudi Arabia",
+    "SN"=>"Senegal",
+    "RS"=>"Serbia",
+    "SC"=>"Seychelles",
+    "SL"=>"Sierra Leone",
+    "SG"=>"Singapore",
+    "SX"=>"Sint Maarten",
+    "SK"=>"Slovakia",
+    "SI"=>"Slovenia",
+    "SB"=>"Solomon Islands",
+    "SO"=>"Somalia",
+    "ZA"=>"South Africa",
+    "GS"=>"South Georgia and the South Sandwich Islands",
+    "KR"=>"South Korea",
+    "SS"=>"South Sudan",
+    "ES"=>"Spain",
+    "LK"=>"Sri Lanka",
+    "SD"=>"Sudan",
+    "SR"=>"Suriname",
+    "SJ"=>"Svalbard and Jan Mayen",
+    "SZ"=>"Swaziland",
+    "SE"=>"Sweden",
+    "CH"=>"Switzerland",
+    "SY"=>"Syria",
+    "TW"=>"Taiwan",
+    "TJ"=>"Tajikistan",
+    "TZ"=>"Tanzania",
+    "TH"=>"Thailand",
+    "TL"=>"Timor-Leste",
+    "TG"=>"Togo",
+    "TK"=>"Tokelau",
+    "TO"=>"Tonga",
+    "TT"=>"Trinidad and Tobago",
+    "TN"=>"Tunisia",
+    "TR"=>"Turkey",
+    "TM"=>"Turkmenistan",
+    "TC"=>"Turks and Caicos Islands",
+    "TV"=>"Tuvalu",
+    "VI"=>"U.S. Virgin Islands",
+    "UG"=>"Uganda",
+    "UA"=>"Ukraine",
+    "AE"=>"United Arab Emirates",
+    "GB"=>"United Kingdom",
+    "US"=>"USA",
+    "UM"=>"United States Minor Outlying Islands",
+    "UY"=>"Uruguay",
+    "UZ"=>"Uzbekistan",
+    "VU"=>"Vanuatu",
+    "VA"=>"Vatican",
+    "VE"=>"Venezuela",
+    "VN"=>"Vietnam",
+    "WF"=>"Wallis and Futuna",
+    "EH"=>"Western Sahara",
+    "YE"=>"Yemen",
+    "ZM"=>"Zambia",
+    "ZW"=>"Zimbabwe"
+    );
+
+  $selected_language = array(
+    "fr"=>"Nations Unies",
+    "en"=>"United Nations",
+    "und"=>"United Nations"
+    );
+
+/**
+ * Implements hook_menu().
+ */
+function print_business_cards_menu(){
+	$items = array();
+  $items['business-card/%'] = array(
+    'page callback' => 'print_business_cards_un',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(1),
+  );
+
+  $items['business-card-single/%'] = array(
+    'page callback' => 'print_business_cards_single',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(1),
+  );
+
+  $items['business-card-back-single/%'] = array(
+    'page callback' => 'print_business_cards_back_single',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(1),
+  );
+
+  $items['business-card-back/%'] = array(
+    'page callback' => 'print_business_cards_back',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(1),
+  );
+
+  return $items;
+}
+
+function print_business_cards_back_single($nid){
+
+  $node = node_load($nid);
+  
+  $paper = 'Letter';
+  $language = '';
+  $orientation = 'h';
+  if ($node->language == 'fr'){
+    $language = '-Fr';
+  } 
+  if ($node->field_bc_paper_size['und'][0]['value'] == 1){ //A4
+    $paper = 'A4';
+  }
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){ //vertical card
+    $orientation = 'v';
+  }  
+  $file_name = drupal_get_path('module', 'print_business_cards') . '/pdf/UN-Card-'.$orientation.'-'.$paper.'-Back'.$language.'.pdf';
+
+  $file_path = url($file_name, array( 'absolute' => TRUE));
+  header('Content-Disposition: attachment; filename="downloaded.pdf"');
+  drupal_goto($file_path); exit;
+}
+
+function print_business_cards_back($nid){
+
+  $node = node_load($nid);
+  
+  $paper = 'Letter';
+  $language = '';
+  $orientation = 'h';
+  if ($node->language == 'fr'){
+    $language = '-Fr';
+  } 
+  if ($node->field_bc_paper_size['und'][0]['value'] == 1){ //A4
+    $paper = 'A4';
+  }
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){ //vertical card
+    $orientation = 'v';
+  } 
+  $file_name = drupal_get_path('module', 'print_business_cards') . '/pdf/UN-Cards-'.$orientation.'-'.$paper.'-Back'.$language.'.pdf';
+
+  $file_path = url($file_name, array( 'absolute' => TRUE));
+  header('Content-Disposition: attachment; filename="downloaded.pdf"');
+  drupal_goto($file_path); exit;
+}
+
+
+function print_business_cards_un($nid){
+
+  global $code_country, $selected_language;
+
+  $output = "";
+  $node = node_load($nid);
+
+  $data = array(
+    'first_name'=>utf8_decode($node->field_bc_first_name['und'][0]['value']),
+    'last_name'=>utf8_decode($node->field_bc_last_name['und'][0]['value']),
+    'title1'=>$node->field_bc_job_title_1['und'][0]['value'],
+    'title2'=>$node->field_bc_job_title_2['und'][0]['value'],
+    'unit1'=>$node->field_bbc_unit_div_dep_1['und'][0]['value'],
+    'unit2'=>$node->field_bbc_unit_div_dep_2['und'][0]['value'],
+    'office'=>$node->field_bbc_office['und'][0]['value'],
+    'mobile'=>$node->field_bc_mobile['und'][0]['value'],
+    'email'=>$node->field_bc_e_mail['und'][0]['email'],
+    'fax'=>$node->field_bc_fax_social_media['und'][0]['value'],
+    'url'=>$node->field_bc_url['und'][0]['url'],
+    'un'=>$selected_language[$node->language], 
+    'address1'=>$node->field_bc_address['und'][0]['thoroughfare'],
+    'address2'=>$node->field_bc_address['und'][0]['premise'],
+    'city'=>$node->field_bc_address['und'][0]['locality'],
+    'state'=>$node->field_bc_address['und'][0]['administrative_area'],
+    'zip'=>$node->field_bc_address['und'][0]['postal_code'],
+    'country'=>$code_country[$node->field_bc_address['und'][0]['country']]
+  );
+
+//A4 or letter
+if ($node->field_bc_paper_size['und'][0]['value'] == 0){ //letter
+  // Vertical cards print on Landscape mode
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){
+    $pdf = new PDF_Label('vert', 'L');
+    $pdf->AddPage();
+    $pdf->line_Marks_Letter();
+    // Print labels
+    for($i=1;$i<=10;$i++){
+      $pdf->Add_Vertical_Card($data);
+    }
+  }
+  else { // Horizontal cards print on Portrait mode
+    $pdf = new PDF_Label('horiz', 'P');
+    $pdf->AddPage();
+    $pdf->line_Marks_Letter();
+    // Print labels
+    for($i=1;$i<=10;$i++){
+      $pdf->Add_Horizontal_Card($data);
+    }
+  }
+} else { //A4
+  // Vertical cards print on Landscape mode
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){
+    $pdf = new PDF_Label('vertA4', 'L');
+    $pdf->AddPage();
+    $pdf->line_Marks_A4();
+    // Print labels
+    for($i=1;$i<=10;$i++){
+      $pdf->Add_Vertical_Card($data);
+    }
+  } else { // Horizontal cards print on Portrait mode
+    $pdf = new PDF_Label('horizA4', 'P');
+    $pdf->AddPage();
+    $pdf->line_Marks_A4();
+    // Print labels
+    for($i=1;$i<=10;$i++){
+      $pdf->Add_Horizontal_Card($data);
+    }
+  }
+}
+
+header('Content-Disposition: attachment; filename="downloaded.pdf"');
+ $output = $pdf->Output();
+ echo  $output;
+}
+
+function print_business_cards_single($nid){
+
+  global $code_country, $selected_language;
+
+  $output = "";
+  $node = node_load($nid);
+
+  $data = array(
+    'first_name'=>utf8_decode($node->field_bc_first_name['und'][0]['value']),
+    'last_name'=>utf8_decode($node->field_bc_last_name['und'][0]['value']),
+    'title1'=>$node->field_bc_job_title_1['und'][0]['value'],
+    'title2'=>$node->field_bc_job_title_2['und'][0]['value'],
+    'unit1'=>$node->field_bbc_unit_div_dep_1['und'][0]['value'],
+    'unit2'=>$node->field_bbc_unit_div_dep_2['und'][0]['value'],
+    'office'=>$node->field_bbc_office['und'][0]['value'],
+    'mobile'=>$node->field_bc_mobile['und'][0]['value'],
+    'email'=>$node->field_bc_e_mail['und'][0]['email'],
+    'fax'=>$node->field_bc_fax_social_media['und'][0]['value'],
+    'url'=>$node->field_bc_url['und'][0]['url'],
+    'un'=>$selected_language[$node->language], 
+    'address1'=>$node->field_bc_address['und'][0]['thoroughfare'],
+    'address2'=>$node->field_bc_address['und'][0]['premise'],
+    'city'=>$node->field_bc_address['und'][0]['locality'],
+    'state'=>$node->field_bc_address['und'][0]['administrative_area'],
+    'zip'=>$node->field_bc_address['und'][0]['postal_code'],
+    'country'=>$code_country[$node->field_bc_address['und'][0]['country']]
+  );
+
+//A4 or letter
+if ($node->field_bc_paper_size['und'][0]['value'] == 0){ //letter
+  // Vertical cards print on Landscape mode
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){
+    $pdf = new PDF_Label('vert1', 'L');
+    $pdf->AddPage();
+    $pdf->line_Marks_Letter(true); //single
+    // Print label
+    $pdf->Add_Vertical_Card($data);
+    
+  } else { // Horizontal cards print on Portrait mode
+    $pdf = new PDF_Label('horiz1', 'P');
+    $pdf->AddPage();
+    $pdf->line_Marks_Letter(true);
+    // Print labels
+    $pdf->Add_Horizontal_Card($data);
+  }
+} else { //A4
+  // Vertical cards print on Landscape mode
+  if ($node->field_bc_orientation['und'][0]['value'] == 1){
+    $pdf = new PDF_Label('vertA4_1', 'L');
+    $pdf->AddPage();
+    $pdf->line_Marks_A4(true);
+    // Print labels
+    $pdf->Add_Vertical_Card($data);
+    
+  } else { // Horizontal cards print on Portrait mode
+    $pdf = new PDF_Label('horizA4_1', 'P');
+    $pdf->AddPage();
+    $pdf->line_Marks_A4(true);
+    // Print labels
+    $pdf->Add_Horizontal_Card($data);
+  }
+}
+
+  header('Content-Disposition: attachment; filename="downloaded.pdf"');
+   $output = $pdf->Output();
+   echo  $output;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function print_business_cards_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+  if ($form_id == 'business_cards_node_form') {
+    
+    //set the autotitle and hide it:
+    $form['title']['#value'] = $user->name . ' ' . date('r');
+    hide($form['title']);
+
+    $form['field_bc_first_name']['und'][0]['value']['#description'] = 'First Name';
+    $form['field_bc_first_name']['und'][0]['value']['#attributes']['placeholder'] = 'First Name';
+    $form['field_bc_last_name']['und'][0]['value']['#description'] = 'Last Name';
+    $form['field_bc_last_name']['und'][0]['value']['#attributes']['placeholder'] = 'Last Name'; 
+    $form['field_bc_job_title_1']['und'][0]['value']['#description'] = 'Job Title (1st Line)';
+    $form['field_bc_job_title_1']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (1st Line)';
+
+    $form['field_bc_job_title_1']['und'][0]['value']['#description'] = 'Job Title (1st Line)';
+    $form['field_bc_job_title_1']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (1st Line)';
+    $form['field_bc_job_title_2']['und'][0]['value']['#description'] = 'Job Title (2nd Line)';
+    $form['field_bc_job_title_2']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (2nd Line)';
+    $form['field_bbc_unit_div_dep_1']['und'][0]['value']['#description'] = 'Unit/Division/Department (1st line)';
+    $form['field_bbc_unit_div_dep_1']['und'][0]['value']['#attributes']['placeholder'] = 'Unit/Division/Department (1st line)';
+    $form['field_bbc_unit_div_dep_2']['und'][0]['value']['#description'] = 'Unit/Division/Department (2nd line)';
+    $form['field_bbc_unit_div_dep_2']['und'][0]['value']['#attributes']['placeholder'] = 'Unit/Division/Department (2nd line)';
+
+    $form['field_bbc_office']['und'][0]['value']['#description'] = 'Office: +1 555 555 5555';
+    $form['field_bbc_office']['und'][0]['value']['#attributes']['placeholder'] = 'Office: +1 555 555 5555';
+    $form['field_bc_mobile']['und'][0]['value']['#description'] = 'Mobile: +1 444 444 4444';
+    $form['field_bc_mobile']['und'][0]['value']['#attributes']['placeholder'] = 'Mobile: +1 444 444 4444';
+    $form['field_bc_e_mail']['und'][0]['email']['#description'] = 'your-email@un.org';
+    $form['field_bc_e_mail']['und'][0]['email']['#attributes']['placeholder'] = 'your-email@un.org';
+    $form['field_bc_fax_social_media']['und'][0]['value']['#description'] = 'Fax/Social Media';
+    $form['field_bc_fax_social_media']['und'][0]['value']['#attributes']['placeholder'] = 'Fax/Social Media';
+    $form['field_bc_url']['und'][0]['url']['#description'] = 'www.un.org';
+    $form['field_bc_url']['und'][0]['url']['#attributes']['placeholder'] = 'www.un.org';
+
+    /*$form['field_bc_address']['und'][0]['locality']['#description'] = 'New York';
+    $form['field_bc_address']['und'][0]['locality']['#attributes']['placeholder'] = 'New York';
+    $form['field_bc_address']['und'][0]['postal_code']['#description'] = '10017';
+    $form['field_bc_address']['und'][0]['postal_code']['#attributes']['placeholder'] = '10017';*/
+
+    //hide the language that appeared by default
+    //hide($form['language']);
+
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function print_business_cards_theme($existing, $type, $theme, $path) {
+  $items = array();
+  
+  $items['pdf_output'] = array(
+    'variables' => array(
+      'account' => NULL,
+      'profile' => NULL,
+      'statistics' => NULL,
+    ),
+  );
+
+  //to use the appropriate form
+  $items['business_cards_node_form'] = array(
+      'arguments' => array('form' => NULL),
+      'template' => 'templates/business-cards-node-form',
+      'render element' => 'form'
+    );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_alter().
+ * Used to call bootstrap iseek
+ */
+function print_business_cards_menu_alter(&$items) {
+  $items['node/add/business-cards']['theme callback'] = 'print_business_cards_add_templateFN';
+
+}
+
+function print_business_cards_add_templateFN(){
+  return 'bootstrap_iseek';
+}

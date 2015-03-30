@@ -572,7 +572,7 @@ function print_business_cards_theme($existing, $type, $theme, $path) {
  */
 function print_business_cards_menu_alter(&$items) {
   $items['node/add/business-cards']['theme callback'] = 'print_business_cards_add_templateFN';
-  $items['node/%node/edit']['theme callback'] = 'print_business_cards_add_templateFN';
+  //$items['node/%node/edit']['theme callback'] = 'print_business_cards_add_templateFN';
 
 }
 

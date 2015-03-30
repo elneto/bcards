@@ -103,6 +103,14 @@ jQuery(document).ready(function($) {
 		if ($("#edit-language").val() == 'fr'){
 			$("#txt-un").text("Nations Unies");
 		}
+
+		if ($("#edit-field-bc-orientation-und-1").is(':checked')){
+			rotateVertical();
+		}
+
+		if ($("#edit-field-bc-back-image-und-1").is(':checked')){//UN Actions
+			$("#un-actions").animate({opacity:1});
+		}
 	} else { //business-cards is a new card
 		//populate with existing placeholders
 		$.each(tbl, function(i){
@@ -138,7 +146,7 @@ jQuery(document).ready(function($) {
 	$(tbl[15].field).keyup(function(){$(tbl[15].txt).text($(tbl[15].field).val());});
 
 	$( document ).on( "keyup", "input",function() {
-		update_vspace();
+		updateVspace();
 	});
 
 	//this adds an event handler to the ajax-changing country inputs
@@ -323,7 +331,7 @@ jQuery(document).ready(function($) {
 					//shows the help
 					$(".help-block").show(300);
 				}
-				update_vspace();
+				updateVspace();
 					
 			});	
 		}
@@ -331,25 +339,11 @@ jQuery(document).ready(function($) {
 
 	//vertical / horizontal layout
 	$("#edit-field-bc-orientation-und-0").change(function(){ //horizontal
-		$("#bcard-preview").css({width:"200px",height:"350px"}).animate({width:"350px",height:"200px", right:"3em"});
-		$("#un-logo").animate({left:"19.22px",top:"18px"});
-		$("#right-group").animate({left:"143.2px",top:"30.5px"});
-		$("#txt-un").animate({left:"19.22px",top:"80.97px"});
-		$("#left-group").animate({"margin-left":"19.22px","margin-top":"0"});
-
-		$("#bcard-preview-back").css({width:"200px",height:"350px"}).animate({width:"350px",height:"200px", top:"30em"});
-		$("#un-actions").css({"transform": "rotate(-90deg)", "margin-top":"200px"});
+		rotateHorizontal();
 	});
 
 	$("#edit-field-bc-orientation-und-1").change(function(){ //vertical
-		$("#bcard-preview").animate({width:"200px",height:"350px",right:"19em"});
-		//$("#bcard-preview").height(350).width(200);
-		$("#un-logo").animate({left:"18px",top:"17px"});
-		$("#right-group").animate({left:"18px",top:"80px"});
-		update_vspace();
-
-		$("#bcard-preview-back").animate({width:"200px",height:"350px", top:"13em"});
-		$("#un-actions").css({"transform": "rotate(0)", "margin-top":"0"});
+		rotateVertical();
 	});
 
 	$("#edit-field-bc-back-image-und-0").change(function(){ //blank
@@ -360,7 +354,29 @@ jQuery(document).ready(function($) {
 		$("#un-actions").animate({opacity:1});
 	});
 
-	function update_vspace(){
+	function rotateHorizontal(){
+		$("#bcard-preview").css({width:"200px",height:"350px"}).animate({width:"350px",height:"200px", right:"3em"});
+		$("#un-logo").animate({left:"19.22px",top:"18px"});
+		$("#right-group").animate({left:"143.2px",top:"30.5px"});
+		$("#txt-un").animate({left:"19.22px",top:"80.97px"});
+		$("#left-group").animate({"margin-left":"19.22px","margin-top":"0"});
+
+		$("#bcard-preview-back").css({width:"200px",height:"350px"}).animate({width:"350px",height:"200px", top:"30em"});
+		$("#un-actions").css({"transform": "rotate(-90deg)", "margin-top":"200px"});
+	}
+
+	function rotateVertical(){
+		$("#bcard-preview").animate({width:"200px",height:"350px",right:"19em"});
+		//$("#bcard-preview").height(350).width(200);
+		$("#un-logo").animate({left:"18px",top:"17px"});
+		$("#right-group").animate({left:"18px",top:"80px"});
+		updateVspace();
+
+		$("#bcard-preview-back").animate({width:"200px",height:"350px", top:"13em"});
+		$("#un-actions").css({"transform": "rotate(0)", "margin-top":"0"});
+	}
+
+	function updateVspace(){
 		//compensate for blank fields in unit or address:
 		buffer = 0;
 		for (i=2; i<=10; i++)

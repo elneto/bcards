@@ -373,7 +373,6 @@ jQuery(document).ready(function($) {
 	//receives an index argument and if the previous indexes of the array are empty it will delete them from the preview
 	//called in focus() 
 	function clearPrevious(index){
-		console.log('callPrevious' + index);
 		for (i=index-1; i>=0; i--){
 			if ($.trim($(tbl[i].field).val()) == "") $(tbl[i].txt).text("");
 		}

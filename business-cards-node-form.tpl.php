@@ -145,6 +145,24 @@ jQuery(document).ready(function($) {
 	$(tbl[14].field).keyup(function(){$(tbl[14].txt).text($(tbl[14].field).val());});
 	$(tbl[15].field).keyup(function(){$(tbl[15].txt).text($(tbl[15].field).val());});
 
+	//to autocomplete
+	$(tbl[0].field).blur(function(){$(tbl[0].txt).text($(tbl[0].field).val());}); //first
+	$(tbl[1].field).blur(function(){$(tbl[1].txt).text($(tbl[1].field).val());});
+	$(tbl[2].field).blur(function(){$(tbl[2].txt).text($(tbl[2].field).val());});
+	$(tbl[3].field).blur(function(){$(tbl[3].txt).text($(tbl[3].field).val());});
+	$(tbl[4].field).blur(function(){$(tbl[4].txt).text($(tbl[4].field).val());});
+	$(tbl[5].field).blur(function(){$(tbl[5].txt).text($(tbl[5].field).val());});
+	$(tbl[6].field).blur(function(){$(tbl[6].txt).text($(tbl[6].field).val());});
+	$(tbl[7].field).blur(function(){$(tbl[7].txt).text($(tbl[7].field).val());});
+	$(tbl[8].field).blur(function(){$(tbl[8].txt).text($(tbl[8].field).val());});
+	$(tbl[9].field).blur(function(){$(tbl[9].txt).text($(tbl[9].field).val());});
+	$(tbl[10].field).blur(function(){$(tbl[10].txt).text($(tbl[10].field).val());});
+	$(tbl[11].field).blur(function(){$(tbl[11].txt).text($(tbl[11].field).val());}); //the ajax updated ones
+	$(tbl[12].field).blur(function(){$(tbl[12].txt).text($(tbl[12].field).val());});
+	$(tbl[13].field).blur(function(){$(tbl[13].txt).text($(tbl[13].field).val());});
+	$(tbl[14].field).blur(function(){$(tbl[14].txt).text($(tbl[14].field).val());});
+	$(tbl[15].field).blur(function(){$(tbl[15].txt).text($(tbl[15].field).val());});
+
 	$( document ).on( "keyup", "input",function() {
 		updateVspace();
 	});

@@ -152,20 +152,35 @@ jQuery(document).ready(function($) {
 	//this adds an event handler to the ajax-changing country inputs
 	$( document ).on( "focus", "input, select",function() {
 		var strid = "#"+String(this.id);
-		if (strid.indexOf(tbl[11].field)==0){
+
+		if (strid.indexOf(tbl[1].field)==0) clearPrevious(1);
+		else if (strid.indexOf(tbl[2].field)==0) clearPrevious(2);
+		else if (strid.indexOf(tbl[3].field)==0) clearPrevious(3);
+		else if (strid.indexOf(tbl[4].field)==0) clearPrevious(4);
+		else if (strid.indexOf(tbl[5].field)==0) clearPrevious(5);
+		else if (strid.indexOf(tbl[6].field)==0) clearPrevious(6);
+		else if (strid.indexOf(tbl[7].field)==0) clearPrevious(7);
+		else if (strid.indexOf(tbl[8].field)==0) clearPrevious(8);
+		else if (strid.indexOf(tbl[9].field)==0) clearPrevious(9);
+		else if (strid.indexOf(tbl[10].field)==0) clearPrevious(10);
+		else if (strid.indexOf(tbl[11].field)==0){
+			clearPrevious(11);
 			$("#"+this.id).on("keyup", function(){
 				$(tbl[11].txt).text($("#"+this.id).val());
 			});	
 		} else if (strid.indexOf(tbl[12].field)==0){
+			clearPrevious(12);
 			$("#"+this.id).on("keyup", function(){
 				$(tbl[12].txt).text($("#"+this.id).val());
 			});	
 
 		} else if (strid.indexOf(tbl[13].field)==0){ //city
+			clearPrevious(13);
 			$("#"+this.id).on("keyup", function(){
 				$(tbl[13].txt).text($("#"+this.id).val());
 			});	
 		} else if (strid.indexOf(tbl[14].field)==0){ //state
+			clearPrevious(14);
 			$("#"+this.id).on("keyup change", function(){
 				if ($(tbl[13].txt).text()) //if there is city add comma before
 					$(tbl[14].txt).text(", "+$("#"+this.id).val());
@@ -173,6 +188,7 @@ jQuery(document).ready(function($) {
 					$(tbl[14].txt).text($("#"+this.id).val());
 			});	
 		} else if (strid.indexOf(tbl[15].field)==0){
+			clearPrevious(15);
 			$("#"+this.id).on("keyup", function(){
 				$(tbl[15].txt).text($("#"+this.id).val());
 			});	
@@ -353,6 +369,15 @@ jQuery(document).ready(function($) {
 	$("#edit-field-bc-back-image-und-1").change(function(){ //UN Actions
 		$("#un-actions").animate({opacity:1});
 	});
+
+	//receives an index argument and if the previous indexes of the array are empty it will delete them from the preview
+	//called in focus() 
+	function clearPrevious(index){
+		console.log('callPrevious' + index);
+		for (i=index-1; i>=0; i--){
+			if ($.trim($(tbl[i].field).val()) == "") $(tbl[i].txt).text("");
+		}
+	}
 
 	function rotateHorizontal(){
 		$("#bcard-preview").css({width:"200px",height:"350px"}).animate({width:"350px",height:"200px", right:"3em"});

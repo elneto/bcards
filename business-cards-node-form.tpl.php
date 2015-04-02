@@ -412,6 +412,7 @@ jQuery(document).ready(function($) {
 		for (i=index-1; i>=0; i--){
 			if ($.trim($(tbl[i].field).val()) == "") $(tbl[i].txt).text("");
 		}
+		updateVspace();
 	}
 
 	function rotateHorizontal(){
@@ -441,7 +442,7 @@ jQuery(document).ready(function($) {
 		for (i=2; i<=10; i++)
 		{
 			if ($.trim($(tbl[i].txt).text()) == "")
-				buffer += 7;
+				buffer += 12;
 		}
 
 		if ($("#edit-field-bc-orientation-und-1").is(':checked'))

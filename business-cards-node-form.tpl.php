@@ -95,22 +95,7 @@ jQuery(document).ready(function($) {
 			]; 
 
 	if (arg2.localeCompare('edit') == 0){ //we are editing the form
-		//populate with existing info
-		$.each(tbl, function(i){
-			$(tbl[i].txt).text($(tbl[i].field).val());
-		});
-
-		if ($("#edit-language").val() == 'fr'){
-			$("#txt-un").text("Nations Unies");
-		}
-
-		if ($("#edit-field-bc-orientation-und-1").is(':checked')){
-			rotateVertical();
-		}
-
-		if ($("#edit-field-bc-back-image-und-1").is(':checked')){//UN Actions
-			$("#un-actions").animate({opacity:1});
-		}
+		updatePreview();
 	} else { //business-cards is a new card
 		//populate with existing placeholders
 		$.each(tbl, function(i){
@@ -121,8 +106,13 @@ jQuery(document).ready(function($) {
 	//existing info to www.un.org for URL field
 	$(tbl[10].txt).text('www.un.org');
 	//add placeholder to URL field
-	//$("#edit-field-bc-url-und-0-url").attr('placeholder', 'www.un.org');
 	$(tbl[10].field).attr('placeholder', 'www.un.org');
+
+	//this detects if there was a validation error
+	if ($("div.alert-danger:contains('field is required')").length > 0 ||
+		$("div.alert-danger:contains('is not a valid email address')").length > 0){
+		updatePreview();
+	}
 
 	//removes submit on enter
 	$('input').keypress(function (event){ return event.keyCode == 13 ? false : true; });
@@ -160,7 +150,7 @@ jQuery(document).ready(function($) {
 	$(tbl[11].field).blur(function(){$(tbl[11].txt).text($(tbl[11].field).val());}); //the ajax updated ones
 	$(tbl[12].field).blur(function(){$(tbl[12].txt).text($(tbl[12].field).val());});
 	$(tbl[13].field).blur(function(){$(tbl[13].txt).text($(tbl[13].field).val());});
-	$(tbl[14].field).blur(function(){$(tbl[14].txt).text($(tbl[14].field).val());});
+	//$(tbl[14].field).blur(function(){$(tbl[14].txt).text($(tbl[14].field).val());});
 	$(tbl[15].field).blur(function(){$(tbl[15].txt).text($(tbl[15].field).val());});
 
 	$( document ).on( "keyup", "input",function() {
@@ -213,157 +203,10 @@ jQuery(document).ready(function($) {
 		} else if (strid.indexOf('#edit-language')==0){ //state
 			$("#"+this.id).on("keyup change", function(){
 				if ($("#"+this.id).val() == 'fr'){
-
-					var unaction = $("#un-actions").attr("src");
-					unaction = unaction.replace('actions.png', 'actions-fr.png');
-					$("#un-actions").attr("src", unaction);
-
-					$("label[for='edit-language']").text("Langue"); //label
-					$('select option:contains("Language neutral")').text('Indépendant de la langue');
-					$('select option:contains("English")').text('Anglais');
-					$('select option:contains("French")').text('Français');
-
-					$("label[for='edit-field-bc-back-image-und']").text("Image pour le verso"); //label
-					$("label[for='edit-field-bc-back-image-und-0']").text("Vide"); //label
-					$("label[for='edit-field-bc-back-image-und-1']").text("l'ONU en action"); //label
-
-					//on the preview
-					$("#txt-un").text("Nations Unies");
-					if ($.trim($(tbl[0].field).val()) == "") $(tbl[0].txt).text("Prénom"); //preview
-					$("label[for='"+tbl[0].field.substring(1)+"']").text("Prénom *"); //label
-					$(tbl[0].field).attr('placeholder', "Prénom"); //placeholder
-					if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Nom de famille");
-					$("label[for='"+tbl[1].field.substring(1)+"']").text("Nom de famille"); //label
-					$(tbl[1].field).attr('placeholder', "Nom de famille"); //placeholder
-
-					if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Titre 1"); //preview
-					$("label[for='"+tbl[2].field.substring(1)+"']").text("Titre / Unité / Division / Département"); //label
-					$(tbl[2].field).attr('placeholder', "Titre 1"); //placeholder
-
-					if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Titre 2"); //preview
-					//$("label[for='"+tbl[3].field.substring(1)+"']").text("Titre 2"); //label
-					$(tbl[3].field).attr('placeholder', "Titre 2"); //placeholder
-
-					if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unité/Division/Département");
-					//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unité/Division/Département"); //label
-					$(tbl[4].field).attr('placeholder', "Unité/Division/Département"); //placeholder
-
-					if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unité/Division/Département");
-					//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unité/Division/Département"); //label
-					$(tbl[5].field).attr('placeholder', "Unité/Division/Département"); //placeholder
-
-					if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Tel: +1 555 555 5555");
-					$("label[for='"+tbl[6].field.substring(1)+"']").text("Tel / Cellulaire"); //label
-					$(tbl[6].field).attr('placeholder', "Tel: +1 555 555 5555"); //placeholder
-
-					if ($.trim($(tbl[7].field).val()) == "") $(tbl[7].txt).text("Cellulaire: +1 444 444 4444");
-					//$("label[for='"+tbl[7].field.substring(1)+"']").text("Cellulaire"); //label
-					$(tbl[7].field).attr('placeholder', "Cellulaire: +1 444 444 4444"); //placeholder
-
-					$("label[for='edit-field-bc-e-mail-und-0-email']").text("Courriel"); //label
-					
-					if ($.trim($(tbl[9].field).val()) == "") $(tbl[9].txt).text("Facsimile (ou media sociaux)");
-					$("label[for='"+tbl[9].field.substring(1)+"']").text("Facsimile (ou media sociaux)"); //label
-					$(tbl[9].field).attr('placeholder', "Facsimile (ou media sociaux)"); //placeholder
-
-					$("label[for='edit-field-bc-address-und-0-country']").text("Pays"); //label
-
-					if ($.trim($(tbl[11].field).val()) == "") $(tbl[11].txt).text("Addresse 1");
-					$("label[for='"+tbl[11].field.substring(1)+"']").text("Addresse 1"); //label
-					$(tbl[11].field).attr('placeholder', "Addresse 1"); //placeholder
-					if ($.trim($(tbl[12].field).val()) == "") $(tbl[12].txt).text("Addresse 2");
-					$("label[for='"+tbl[12].field.substring(1)+"']").text("Addresse 2"); //label
-					$(tbl[12].field).attr('placeholder', "Addresse 2"); //placeholder
-					if ($.trim($(tbl[13].field).val()) == "") $(tbl[13].txt).text("Ville");
-					$("label[for='"+tbl[13].field.substring(1)+"']").text("Ville"); //label
-					$(tbl[13].field).attr('placeholder', "Ville"); //placeholder
-
-					$("label[for='edit-field-bc-address-und-0-administrative-area']").text("État *"); //label
-
-					if ($.trim($(tbl[15].field).val()) == "") $(tbl[15].txt).text("Code Postal");
-					$("label[for='"+tbl[15].field.substring(1)+"']").text("Code Postal"); //label
-					$(tbl[15].field).attr('placeholder', "Code Postal"); //placeholder
-
-					$("label[for='edit-field-bc-paper-size-und']").text("Taille du papier *"); //label
-					$("label[for='edit-field-bc-paper-size-und-0']").text("Lettre (US)"); //label
-
-					//hides the help
-					$(".help-block").hide(300);
-
+					translateFrench();
 				} 
 				else {
-					var unaction = $("#un-actions").attr("src");
-					unaction = unaction.replace('actions-fr.png', 'actions.png');
-					$("#un-actions").attr("src", unaction);
-
-					$("label[for='edit-language']").text("Language"); //label
-					$('select option:contains("Indépendant de la langue")').text('Language neutral');
-					$('select option:contains("Anglais")').text('English');
-					$('select option:contains("Français")').text('French');
-
-					$("label[for='edit-field-bc-back-image-und']").text("Back Image"); //label
-					$("label[for='edit-field-bc-back-image-und-0']").text("Blank"); //label
-					$("label[for='edit-field-bc-back-image-und-1']").text("UN Actions"); //label
-
-					//on the preview
-					$("#txt-un").text("United Nations");
-					if ($.trim($(tbl[0].field).val()) == "") $(tbl[0].txt).text("First Name"); //preview
-					$("label[for='"+tbl[0].field.substring(1)+"']").text("First Name *"); //label
-					$(tbl[0].field).attr('placeholder', "First Name"); //placeholder
-					if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Last Name");
-					$("label[for='"+tbl[1].field.substring(1)+"']").text("Last Name"); //label
-					$(tbl[1].field).attr('placeholder', "Last Name"); //placeholder
-					if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Job Title (1st Line)");
-					$("label[for='"+tbl[2].field.substring(1)+"']").text("Job Title / Unit / Division / Department"); //label
-					$(tbl[2].field).attr('placeholder', "Job Title (1st Line)"); //placeholder
-					if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Job Title (2nd Line)"); //Preview
-					//$("label[for='"+tbl[3].field.substring(1)+"']").text("Title 2"); //label
-					$(tbl[3].field).attr('placeholder', "Job Title (2nd Line)"); //placeholder
-
-					if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unit/Division/Department (1st line)"); //preview
-					//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unit/Division/Department"); //label
-					$(tbl[4].field).attr('placeholder', "Unit/Division/Department (1st line)"); //placeholder
-					if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unit/Division/Department (2nd line)");
-					//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unit/Division/Department"); //label
-					$(tbl[5].field).attr('placeholder', "Unit/Division/Department (2nd line)"); //placeholder
-
-					if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Office: +1 555 555 5555"); //preview
-					$("label[for='"+tbl[6].field.substring(1)+"']").text("Office / Mobile"); //label
-					$(tbl[6].field).attr('placeholder', "Office: +1 555 555 5555"); //placeholder
-
-					if ($.trim($(tbl[7].field).val()) == "") $(tbl[7].txt).text("Mobile: +1 444 444 4444"); //preview
-					//$("label[for='"+tbl[7].field.substring(1)+"']").text("Mobile:"); //label
-					$(tbl[7].field).attr('placeholder', "Mobile: +1 444 444 4444"); //placeholder
-
-					$("label[for='edit-field-bc-e-mail-und-0-email']").text("Email"); //label
-					
-					if ($.trim($(tbl[9].field).val()) == "") $(tbl[9].txt).text("Fax (or social media)");
-					$("label[for='"+tbl[9].field.substring(1)+"']").text("Fax (or social media)"); //label
-					$(tbl[9].field).attr('placeholder', "Fax (or social media)"); //placeholder
-
-					$("label[for='edit-field-bc-address-und-0-country']").text("Country"); //label
-
-					if ($.trim($(tbl[11].field).val()) == "") $(tbl[11].txt).text("Address line 1");
-					$("label[for='"+tbl[11].field.substring(1)+"']").text("Address line 1"); //label
-					$(tbl[11].field).attr('placeholder', "Address line 1"); //placeholder
-					if ($.trim($(tbl[12].field).val()) == "") $(tbl[12].txt).text("Address line 2");
-					$("label[for='"+tbl[12].field.substring(1)+"']").text("Address line 2"); //label
-					$(tbl[12].field).attr('placeholder', "Address line 2"); //placeholder
-					if ($.trim($(tbl[13].field).val()) == "") $(tbl[13].txt).text("City");
-					$("label[for='"+tbl[13].field.substring(1)+"']").text("City"); //label
-					$(tbl[13].field).attr('placeholder', "City"); //placeholder
-
-					$("label[for='edit-field-bc-address-und-0-administrative-area']").text("State *"); //label
-
-					if ($.trim($(tbl[15].field).val()) == "") $(tbl[15].txt).text("Zip code");
-					$("label[for='"+tbl[15].field.substring(1)+"']").text("Zip code"); //label
-					$(tbl[15].field).attr('placeholder', "Zip code"); //placeholder
-
-					$("label[for='edit-field-bc-paper-size-und']").text("Paper Size *"); //label
-					$("label[for='edit-field-bc-paper-size-und-0']").text("Letter (US)"); //label
-
-					//shows the help
-					$(".help-block").show(300);
+					translateEnglish();
 				}
 				updateVspace();
 					
@@ -388,6 +231,181 @@ jQuery(document).ready(function($) {
 		$("#un-actions").animate({opacity:1});
 	});
 
+	function translateEnglish(){
+		var unaction = $("#un-actions").attr("src");
+		unaction = unaction.replace('actions-fr.png', 'actions.png');
+		$("#un-actions").attr("src", unaction);
+
+		$("label[for='edit-language']").text("Language"); //label
+		$('select option:contains("Indépendant de la langue")').text('Language neutral');
+		$('select option:contains("Anglais")').text('English');
+		$('select option:contains("Français")').text('French');
+
+		$("label[for='edit-field-bc-back-image-und']").text("Back Image"); //label
+		$("label[for='edit-field-bc-back-image-und-0']").text("Blank"); //label
+		$("label[for='edit-field-bc-back-image-und-1']").text("UN Actions"); //label
+
+		//on the preview
+		$("#txt-un").text("United Nations");
+		if ($.trim($(tbl[0].field).val()) == "") $(tbl[0].txt).text("First Name"); //preview
+		$("label[for='"+tbl[0].field.substring(1)+"']").text("First Name *"); //label
+		$(tbl[0].field).attr('placeholder', "First Name"); //placeholder
+		if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Last Name");
+		$("label[for='"+tbl[1].field.substring(1)+"']").text("Last Name"); //label
+		$(tbl[1].field).attr('placeholder', "Last Name"); //placeholder
+		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Job Title (1st Line)");
+		$("label[for='"+tbl[2].field.substring(1)+"']").text("Job Title / Unit / Division / Department"); //label
+		$(tbl[2].field).attr('placeholder', "Job Title (1st Line)"); //placeholder
+		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Job Title (2nd Line)"); //Preview
+		//$("label[for='"+tbl[3].field.substring(1)+"']").text("Title 2"); //label
+		$(tbl[3].field).attr('placeholder', "Job Title (2nd Line)"); //placeholder
+
+		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unit/Division/Department (1st line)"); //preview
+		//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unit/Division/Department"); //label
+		$(tbl[4].field).attr('placeholder', "Unit/Division/Department (1st line)"); //placeholder
+		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unit/Division/Department (2nd line)");
+		//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unit/Division/Department"); //label
+		$(tbl[5].field).attr('placeholder', "Unit/Division/Department (2nd line)"); //placeholder
+
+		if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Office: +1 555 555 5555"); //preview
+		$("label[for='"+tbl[6].field.substring(1)+"']").text("Office / Mobile"); //label
+		$(tbl[6].field).attr('placeholder', "Office: +1 555 555 5555"); //placeholder
+
+		if ($.trim($(tbl[7].field).val()) == "") $(tbl[7].txt).text("Mobile: +1 444 444 4444"); //preview
+		//$("label[for='"+tbl[7].field.substring(1)+"']").text("Mobile:"); //label
+		$(tbl[7].field).attr('placeholder', "Mobile: +1 444 444 4444"); //placeholder
+
+		$("label[for='edit-field-bc-e-mail-und-0-email']").text("Email"); //label
+		
+		if ($.trim($(tbl[9].field).val()) == "") $(tbl[9].txt).text("Fax (or social media)");
+		$("label[for='"+tbl[9].field.substring(1)+"']").text("Fax (or social media)"); //label
+		$(tbl[9].field).attr('placeholder', "Fax (or social media)"); //placeholder
+
+		$("label[for='edit-field-bc-address-und-0-country']").text("Country"); //label
+
+		if ($.trim($(tbl[11].field).val()) == "") $(tbl[11].txt).text("Address line 1");
+		$("label[for='"+tbl[11].field.substring(1)+"']").text("Address line 1"); //label
+		$(tbl[11].field).attr('placeholder', "Address line 1"); //placeholder
+		if ($.trim($(tbl[12].field).val()) == "") $(tbl[12].txt).text("Address line 2");
+		$("label[for='"+tbl[12].field.substring(1)+"']").text("Address line 2"); //label
+		$(tbl[12].field).attr('placeholder', "Address line 2"); //placeholder
+		if ($.trim($(tbl[13].field).val()) == "") $(tbl[13].txt).text("City");
+		$("label[for='"+tbl[13].field.substring(1)+"']").text("City"); //label
+		$(tbl[13].field).attr('placeholder', "City"); //placeholder
+
+		$("label[for='edit-field-bc-address-und-0-administrative-area']").text("State *"); //label
+
+		if ($.trim($(tbl[15].field).val()) == "") $(tbl[15].txt).text("Zip code");
+		$("label[for='"+tbl[15].field.substring(1)+"']").text("Zip code"); //label
+		$(tbl[15].field).attr('placeholder', "Zip code"); //placeholder
+
+		$("label[for='edit-field-bc-paper-size-und']").text("Paper Size *"); //label
+		$("label[for='edit-field-bc-paper-size-und-0']").text("Letter (US)"); //label
+
+		//shows the help
+		$(".help-block").show(300);
+	}
+
+	function translateFrench(){
+		var unaction = $("#un-actions").attr("src");
+		unaction = unaction.replace('actions.png', 'actions-fr.png');
+		$("#un-actions").attr("src", unaction);
+
+		$("label[for='edit-language']").text("Langue"); //label
+		$('select option:contains("Language neutral")').text('Indépendant de la langue');
+		$('select option:contains("English")').text('Anglais');
+		$('select option:contains("French")').text('Français');
+
+		$("label[for='edit-field-bc-back-image-und']").text("Image pour le verso"); //label
+		$("label[for='edit-field-bc-back-image-und-0']").text("Vide"); //label
+		$("label[for='edit-field-bc-back-image-und-1']").text("l'ONU en action"); //label
+
+		//on the preview
+		$("#txt-un").text("Nations Unies");
+		if ($.trim($(tbl[0].field).val()) == "") $(tbl[0].txt).text("Prénom"); //preview
+		$("label[for='"+tbl[0].field.substring(1)+"']").text("Prénom *"); //label
+		$(tbl[0].field).attr('placeholder', "Prénom"); //placeholder
+		if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Nom de famille");
+		$("label[for='"+tbl[1].field.substring(1)+"']").text("Nom de famille"); //label
+		$(tbl[1].field).attr('placeholder', "Nom de famille"); //placeholder
+
+		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Titre 1"); //preview
+		$("label[for='"+tbl[2].field.substring(1)+"']").text("Titre / Unité / Division / Département"); //label
+		$(tbl[2].field).attr('placeholder', "Titre 1"); //placeholder
+
+		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Titre 2"); //preview
+		//$("label[for='"+tbl[3].field.substring(1)+"']").text("Titre 2"); //label
+		$(tbl[3].field).attr('placeholder', "Titre 2"); //placeholder
+
+		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unité/Division/Département");
+		//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unité/Division/Département"); //label
+		$(tbl[4].field).attr('placeholder', "Unité/Division/Département"); //placeholder
+
+		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unité/Division/Département");
+		//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unité/Division/Département"); //label
+		$(tbl[5].field).attr('placeholder', "Unité/Division/Département"); //placeholder
+
+		if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Tel: +1 555 555 5555");
+		$("label[for='"+tbl[6].field.substring(1)+"']").text("Tel / Cellulaire"); //label
+		$(tbl[6].field).attr('placeholder', "Tel: +1 555 555 5555"); //placeholder
+
+		if ($.trim($(tbl[7].field).val()) == "") $(tbl[7].txt).text("Cellulaire: +1 444 444 4444");
+		//$("label[for='"+tbl[7].field.substring(1)+"']").text("Cellulaire"); //label
+		$(tbl[7].field).attr('placeholder', "Cellulaire: +1 444 444 4444"); //placeholder
+
+		$("label[for='edit-field-bc-e-mail-und-0-email']").text("Courriel"); //label
+		
+		if ($.trim($(tbl[9].field).val()) == "") $(tbl[9].txt).text("Facsimile (ou media sociaux)");
+		$("label[for='"+tbl[9].field.substring(1)+"']").text("Facsimile (ou media sociaux)"); //label
+		$(tbl[9].field).attr('placeholder', "Facsimile (ou media sociaux)"); //placeholder
+
+		$("label[for='edit-field-bc-address-und-0-country']").text("Pays"); //label
+
+		if ($.trim($(tbl[11].field).val()) == "") $(tbl[11].txt).text("Addresse 1");
+		$("label[for='"+tbl[11].field.substring(1)+"']").text("Addresse 1"); //label
+		$(tbl[11].field).attr('placeholder', "Addresse 1"); //placeholder
+		if ($.trim($(tbl[12].field).val()) == "") $(tbl[12].txt).text("Addresse 2");
+		$("label[for='"+tbl[12].field.substring(1)+"']").text("Addresse 2"); //label
+		$(tbl[12].field).attr('placeholder', "Addresse 2"); //placeholder
+		if ($.trim($(tbl[13].field).val()) == "") $(tbl[13].txt).text("Ville");
+		$("label[for='"+tbl[13].field.substring(1)+"']").text("Ville"); //label
+		$(tbl[13].field).attr('placeholder', "Ville"); //placeholder
+
+		$("label[for='edit-field-bc-address-und-0-administrative-area']").text("État *"); //label
+
+		if ($.trim($(tbl[15].field).val()) == "") $(tbl[15].txt).text("Code Postal");
+		$("label[for='"+tbl[15].field.substring(1)+"']").text("Code Postal"); //label
+		$(tbl[15].field).attr('placeholder', "Code Postal"); //placeholder
+
+		$("label[for='edit-field-bc-paper-size-und']").text("Taille du papier *"); //label
+		$("label[for='edit-field-bc-paper-size-und-0']").text("Lettre (US)"); //label
+
+		//hides the help
+		$(".help-block").hide(300);
+
+	}
+
+	//takes values from inputs and updates the preview
+	function updatePreview(){
+		//populate with existing info
+		$.each(tbl, function(i){
+			$(tbl[i].txt).text($(tbl[i].field).val());
+		});
+
+		if ($("#edit-language").val() == 'fr'){
+			$("#txt-un").text("Nations Unies");
+			translateFrench();
+		}
+
+		if ($("#edit-field-bc-orientation-und-1").is(':checked')){
+			rotateVertical();
+		}
+
+		if ($("#edit-field-bc-back-image-und-1").is(':checked')){//UN Actions
+			$("#un-actions").animate({opacity:1});
+		}
+	}
+
 	//receives an index argument and if the previous indexes of the array are empty it will delete them from the preview
 	//called in focus() 
 	function clearPrevious(index){
@@ -409,7 +427,6 @@ jQuery(document).ready(function($) {
 
 	function rotateVertical(){
 		$("#bcard-preview").animate({width:"200px",height:"350px",right:"19em"});
-		//$("#bcard-preview").height(350).width(200);
 		$("#un-logo").animate({left:"18px",top:"17px"});
 		$("#right-group").animate({left:"18px",top:"80px"});
 		updateVspace();

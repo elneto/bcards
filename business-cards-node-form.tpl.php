@@ -17,7 +17,7 @@ print drupal_render_children($form);
   			<div class="clearfix:after"></div>
   			<span id="city">City</span><span id="state"></span><span style="clear:none">&nbsp;</span><span id="zip">Zip code</span>
   			<div class="clearfix:after"></div>
-  			<span id="country">Country</span>
+  			<span id="country">USA</span>
   		</div>
   	</div>
   	<div id="right-group">
@@ -65,13 +65,25 @@ jQuery(document).ready(function($) {
 
 	//get val from select
 	var pais = $("#edit-field-bc-address-und-0-country option:selected").text();
-	$("#country").text((pais=='United States')?'USA':pais);
+	if (pais == 'United States'){
+		$("#country").text('USA');	
+	} else if (pais == '- None -'){
+		$("#country").text('');	
+	}
+	//$("#country").text((pais=='United States')?'USA':pais);
+	//$("#country").text((pais=='- None -')?'':pais);
 	
 	//this adds a one time event handler to the ajax changing country select object
 	$( document ).on( "focus", "select.country",function() {
 		$("#"+this.id).one("change", function(){
 			var pais2 = $("#"+this.id+ " option:selected").text();
-			$("#country").text((pais2=='United States')?'USA':pais2);
+			/*$("#country").text((pais2=='United States')?'USA':pais2);
+			$("#country").text((pais2=='- None -')?'':pais2);*/
+			if (pais == 'United States'){
+				$("#country").text('USA');	
+			} else if (pais == '- None -'){
+				$("#country").text('');	
+			}
 		});
 	});
 	

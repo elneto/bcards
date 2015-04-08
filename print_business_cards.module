@@ -321,7 +321,7 @@ function print_business_cards_back_single($nid){
   }  
   $file_name = drupal_get_path('module', 'print_business_cards') . '/pdf/UN-Card-'.$orientation.'-'.$paper.'-Back'.$language.'.pdf';
 
-  $file_path = url($file_name, array( 'absolute' => TRUE));
+  $file_path = url($file_name, array( 'absolute' => TRUE, 'language' => (object)array('language' => FALSE)));
   header('Content-Disposition: attachment; filename="downloaded.pdf"');
   drupal_goto($file_path); exit;
 }
@@ -344,7 +344,7 @@ function print_business_cards_back($nid){
   } 
   $file_name = drupal_get_path('module', 'print_business_cards') . '/pdf/UN-Cards-'.$orientation.'-'.$paper.'-Back'.$language.'.pdf';
 
-  $file_path = url($file_name, array( 'absolute' => TRUE));
+  $file_path = url($file_name, array( 'absolute' => TRUE, 'language' => (object)array('language' => FALSE)));
   header('Content-Disposition: attachment; filename="downloaded.pdf"');
   drupal_goto($file_path); exit;
 }

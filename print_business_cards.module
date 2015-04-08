@@ -501,7 +501,7 @@ function print_business_cards_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'business_cards_node_form') {
     
     //set the autotitle and hide it:
-    $form['title']['#value'] = $user->name . ' ' . date('r');
+    $form['title']['#value'] = date('l, d F Y - G:i');
     hide($form['title']);
 
     $form['field_bc_first_name']['und'][0]['value']['#description'] = 'First Name';

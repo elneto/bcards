@@ -128,9 +128,16 @@ jQuery(document).ready(function($) {
 
 	//if there is reload make vertical just in case
 	if ($("#edit-field-orientation-und-1").is(':checked')) //vertical business card
-		{
-			rotateVertical();
-		}
+	{
+		rotateVertical();
+	}
+
+	//receive french
+	if (lang=='fr')
+	{
+		$("#edit-language").val('fr');
+		translateFrench();
+	}
 
 	//removes submit on enter
 	$('input').keypress(function (event){ return event.keyCode == 13 ? false : true; });

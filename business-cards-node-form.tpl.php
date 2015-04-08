@@ -126,6 +126,12 @@ jQuery(document).ready(function($) {
 		updatePreview();
 	}
 
+	//if there is reload make vertical just in case
+	if ($("#edit-field-orientation-und-1").is(':checked')) //vertical business card
+		{
+			rotateVertical();
+		}
+
 	//removes submit on enter
 	$('input').keypress(function (event){ return event.keyCode == 13 ? false : true; });
 	
@@ -459,6 +465,13 @@ jQuery(document).ready(function($) {
 
 		if ($("#edit-field-bc-orientation-und-1").is(':checked'))
 		{
+			if ($.trim($(tbl[1].txt).text()) == ""){ //if last name is empty
+				$("#bc-right-column").animate({top:"33px"}); //pull everything up
+				buffer += 20; //move 20 up
+			} else {
+				$("#bc-right-column").animate({top:"53px"}); //leave it down
+			} 
+
 			mtop = 251 - buffer;
 			$("#txt-un").animate({left:"18px",top:mtop+"px"});
 			mtop = 165 - buffer;

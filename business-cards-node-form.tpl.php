@@ -128,9 +128,11 @@ jQuery(document).ready(function($) {
 	}
 
 	//if there is reload make vertical just in case
-	if ($("#edit-field-orientation-und-1").is(':checked')) //vertical business card
-	{
+	if ($("#edit-field-bc-orientation-und-1").is(':checked')){ //vertical business card
 		rotateVertical();
+	}
+	if ($("#edit-field-bc-back-image-und-1").is(':checked')){ //UN Actions
+		$("#un-actions").animate({opacity:1});
 	}
 
 	//receive french

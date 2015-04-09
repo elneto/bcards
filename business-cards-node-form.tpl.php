@@ -70,6 +70,8 @@ jQuery(document).ready(function($) {
 		$("#country").text('USA');	
 	} else if (pais == '- None -'){
 		$("#country").text('');	
+	} else {
+		$("#country").text(pais);
 	}
 	//$("#country").text((pais=='United States')?'USA':pais);
 	//$("#country").text((pais=='- None -')?'':pais);
@@ -80,10 +82,12 @@ jQuery(document).ready(function($) {
 			var pais2 = $("#"+this.id+ " option:selected").text();
 			/*$("#country").text((pais2=='United States')?'USA':pais2);
 			$("#country").text((pais2=='- None -')?'':pais2);*/
-			if (pais == 'United States'){
+			if (pais2 == 'United States'){
 				$("#country").text('USA');	
-			} else if (pais == '- None -'){
+			} else if (pais2 == '- None -'){
 				$("#country").text('');	
+			} else {
+				$("#country").text(pais2);
 			}
 		});
 	});
@@ -123,6 +127,7 @@ jQuery(document).ready(function($) {
 
 	//this detects if there was a validation error
 	if ($("div.alert-danger:contains('field is required')").length > 0 ||
+		$("div.alert-danger:contains('est requis')").length > 0 || //for the validation error in french
 		$("div.alert-danger:contains('is not a valid email address')").length > 0){
 		updatePreview();
 	}
@@ -281,7 +286,7 @@ jQuery(document).ready(function($) {
 		if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Last Name");
 		$("label[for='"+tbl[1].field.substring(1)+"']").text("Last Name"); //label
 		$(tbl[1].field).attr('placeholder', "Last Name"); //placeholder
-		
+
 		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Job Title / Unit / Division / Department");
 		$("label[for='"+tbl[2].field.substring(1)+"']").text("Job Title / Unit / Division / Department"); //label
 		$(tbl[2].field).attr('placeholder', "Job Title / Unit / Division / Department"); //placeholder

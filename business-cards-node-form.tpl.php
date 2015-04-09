@@ -62,6 +62,7 @@ jQuery(document).ready(function($) {
 	var buffer = 0;
 	var mtop = 0;
 	var arg2 = <? echo "'".arg(2)."'";?>;
+	var lang = <? echo "'".$_GET['lang']."'";?>;
 
 	//get val from select
 	var pais = $("#edit-field-bc-address-und-0-country option:selected").text();

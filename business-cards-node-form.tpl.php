@@ -281,19 +281,20 @@ jQuery(document).ready(function($) {
 		if ($.trim($(tbl[1].field).val()) == "") $(tbl[1].txt).text("Last Name");
 		$("label[for='"+tbl[1].field.substring(1)+"']").text("Last Name"); //label
 		$(tbl[1].field).attr('placeholder', "Last Name"); //placeholder
-		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Job Title (1st Line)");
+		
+		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Job Title / Unit / Division / Department");
 		$("label[for='"+tbl[2].field.substring(1)+"']").text("Job Title / Unit / Division / Department"); //label
-		$(tbl[2].field).attr('placeholder', "Job Title (1st Line)"); //placeholder
-		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Job Title (2nd Line)"); //Preview
+		$(tbl[2].field).attr('placeholder', "Job Title / Unit / Division / Department"); //placeholder
+		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Job Title / Unit / Division / Department"); //Preview
 		//$("label[for='"+tbl[3].field.substring(1)+"']").text("Title 2"); //label
-		$(tbl[3].field).attr('placeholder', "Job Title (2nd Line)"); //placeholder
+		$(tbl[3].field).attr('placeholder', "Job Title / Unit / Division / Department"); //placeholder
 
-		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unit/Division/Department (1st line)"); //preview
+		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Job Title / Unit / Division / Department"); //preview
 		//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unit/Division/Department"); //label
-		$(tbl[4].field).attr('placeholder', "Unit/Division/Department (1st line)"); //placeholder
-		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unit/Division/Department (2nd line)");
+		$(tbl[4].field).attr('placeholder', "Job Title / Unit / Division / Department"); //placeholder
+		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Job Title / Unit / Division / Department");
 		//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unit/Division/Department"); //label
-		$(tbl[5].field).attr('placeholder', "Unit/Division/Department (2nd line)"); //placeholder
+		$(tbl[5].field).attr('placeholder', "Job Title / Unit / Division / Department"); //placeholder
 
 		if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Office: +1 555 555 5555"); //preview
 		$("label[for='"+tbl[6].field.substring(1)+"']").text("Office / Mobile"); //label
@@ -357,21 +358,21 @@ jQuery(document).ready(function($) {
 		$("label[for='"+tbl[1].field.substring(1)+"']").text("Nom de famille"); //label
 		$(tbl[1].field).attr('placeholder', "Nom de famille"); //placeholder
 
-		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Titre 1"); //preview
+		if ($.trim($(tbl[2].field).val()) == "") $(tbl[2].txt).text("Titre / Unité / Division / Département"); //preview
 		$("label[for='"+tbl[2].field.substring(1)+"']").text("Titre / Unité / Division / Département"); //label
-		$(tbl[2].field).attr('placeholder', "Titre 1"); //placeholder
+		$(tbl[2].field).attr('placeholder', "Titre / Unité / Division / Département"); //placeholder
 
-		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Titre 2"); //preview
+		if ($.trim($(tbl[3].field).val()) == "") $(tbl[3].txt).text("Titre / Unité / Division / Département"); //preview
 		//$("label[for='"+tbl[3].field.substring(1)+"']").text("Titre 2"); //label
-		$(tbl[3].field).attr('placeholder', "Titre 2"); //placeholder
+		$(tbl[3].field).attr('placeholder', "Titre / Unité / Division / Département"); //placeholder
 
-		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Unité/Division/Département");
+		if ($.trim($(tbl[4].field).val()) == "") $(tbl[4].txt).text("Titre / Unité / Division / Département");
 		//$("label[for='"+tbl[4].field.substring(1)+"']").text("Unité/Division/Département"); //label
-		$(tbl[4].field).attr('placeholder', "Unité/Division/Département"); //placeholder
+		$(tbl[4].field).attr('placeholder', "Titre / Unité / Division / Département"); //placeholder
 
-		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Unité/Division/Département");
+		if ($.trim($(tbl[5].field).val()) == "") $(tbl[5].txt).text("Titre / Unité / Division / Département");
 		//$("label[for='"+tbl[5].field.substring(1)+"']").text("Unité/Division/Département"); //label
-		$(tbl[5].field).attr('placeholder', "Unité/Division/Département"); //placeholder
+		$(tbl[5].field).attr('placeholder', "Titre / Unité / Division / Département"); //placeholder
 
 		if ($.trim($(tbl[6].field).val()) == "") $(tbl[6].txt).text("Tel: +1 555 555 5555");
 		$("label[for='"+tbl[6].field.substring(1)+"']").text("Tel / Cellulaire"); //label

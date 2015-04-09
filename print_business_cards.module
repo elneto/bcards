@@ -504,40 +504,19 @@ function print_business_cards_form_alter(&$form, &$form_state, $form_id) {
     $form['title']['#value'] = date('l, d F Y - G:i');
     hide($form['title']);
 
-    $form['field_bc_first_name']['und'][0]['value']['#description'] = 'First Name';
-    $form['field_bc_first_name']['und'][0]['value']['#attributes']['placeholder'] = 'First Name';
-    $form['field_bc_last_name']['und'][0]['value']['#description'] = 'Last Name';
-    $form['field_bc_last_name']['und'][0]['value']['#attributes']['placeholder'] = 'Last Name'; 
-    $form['field_bc_job_title_1']['und'][0]['value']['#description'] = 'Job Title (1st Line)';
-    $form['field_bc_job_title_1']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (1st Line)';
+    $form['field_bc_first_name']['und'][0]['value']['#attributes']['placeholder'] = t('First Name');
+    $form['field_bc_last_name']['und'][0]['value']['#attributes']['placeholder'] = t('Last Name'); 
 
-    $form['field_bc_job_title_1']['und'][0]['value']['#description'] = 'Job Title (1st Line)';
-    $form['field_bc_job_title_1']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (1st Line)';
-    $form['field_bc_job_title_2']['und'][0]['value']['#description'] = 'Job Title (2nd Line)';
-    $form['field_bc_job_title_2']['und'][0]['value']['#attributes']['placeholder'] = 'Job Title (2nd Line)';
-    $form['field_bbc_unit_div_dep_1']['und'][0]['value']['#description'] = 'Unit/Division/Department (1st line)';
-    $form['field_bbc_unit_div_dep_1']['und'][0]['value']['#attributes']['placeholder'] = 'Unit/Division/Department (1st line)';
-    $form['field_bbc_unit_div_dep_2']['und'][0]['value']['#description'] = 'Unit/Division/Department (2nd line)';
-    $form['field_bbc_unit_div_dep_2']['und'][0]['value']['#attributes']['placeholder'] = 'Unit/Division/Department (2nd line)';
+    $form['field_bc_job_title_1']['und'][0]['value']['#attributes']['placeholder'] = t('Job Title / Unit / Division / Department');
+    $form['field_bc_job_title_2']['und'][0]['value']['#attributes']['placeholder'] = t('Job Title / Unit / Division / Department');
+    $form['field_bbc_unit_div_dep_1']['und'][0]['value']['#attributes']['placeholder'] = t('Job Title / Unit / Division / Department');
+    $form['field_bbc_unit_div_dep_2']['und'][0]['value']['#attributes']['placeholder'] = t('Job Title / Unit / Division / Department');
 
-    $form['field_bbc_office']['und'][0]['value']['#description'] = 'Office: +1 555 555 5555';
     $form['field_bbc_office']['und'][0]['value']['#attributes']['placeholder'] = 'Office: +1 555 555 5555';
-    $form['field_bc_mobile']['und'][0]['value']['#description'] = 'Mobile: +1 444 444 4444';
     $form['field_bc_mobile']['und'][0]['value']['#attributes']['placeholder'] = 'Mobile: +1 444 444 4444';
-    $form['field_bc_e_mail']['und'][0]['email']['#description'] = 'your-email@un.org';
     $form['field_bc_e_mail']['und'][0]['email']['#attributes']['placeholder'] = 'your-email@un.org';
-    $form['field_bc_fax_social_media']['und'][0]['value']['#description'] = 'Fax/Social Media';
     $form['field_bc_fax_social_media']['und'][0]['value']['#attributes']['placeholder'] = 'Fax/Social Media';
-    $form['field_bc_url']['und'][0]['url']['#description'] = 'www.un.org';
     $form['field_bc_url']['und'][0]['url']['#attributes']['placeholder'] = 'www.un.org';
-
-    /*$form['field_bc_address']['und'][0]['locality']['#description'] = 'New York';
-    $form['field_bc_address']['und'][0]['locality']['#attributes']['placeholder'] = 'New York';
-    $form['field_bc_address']['und'][0]['postal_code']['#description'] = '10017';
-    $form['field_bc_address']['und'][0]['postal_code']['#attributes']['placeholder'] = '10017';*/
-
-    //hide the language that appeared by default
-    //hide($form['language']);
 
   }
 }

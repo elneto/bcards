@@ -352,7 +352,7 @@ jQuery(document).ready(function($) {
 
 		$("label[for='edit-field-bc-back-image-und']").text("Image pour le verso"); //label
 		$("label[for='edit-field-bc-back-image-und-0']").text("Vide"); //label
-		$("label[for='edit-field-bc-back-image-und-1']").text("l'ONU en action"); //label
+		$("label[for='edit-field-bc-back-image-und-1']").text("L'ONU en action"); //label
 
 		//on the preview
 		$("#txt-un").text("Nations Unies");
